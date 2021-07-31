@@ -261,3 +261,18 @@ details.detailed-explanation p {
   fill: black;
   stroke: black;
 }
+
+.admonition a,
+blockquote a {
+  text-decoration-color: var(--ifm-alert-border-color);
+}
+
+.admonition a:not(:hover),
+blockquote a:not(:hover) {
+  text-decoration-thickness: 1px;
+}
+
+.admonition a:not(:visited),
+blockquote a:not(:visited) {
+  color: var(--blockquote-text-color);
+}
