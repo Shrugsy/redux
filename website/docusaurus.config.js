@@ -1,3 +1,9 @@
+const { resolve } = require('path')
+const {
+  linkDocblocks,
+  transpileCodeblocks,
+} = require('remark-typescript-tools')
+
 module.exports = {
   title: 'Redux',
   tagline: 'A Predictable State Container for JS Apps',
@@ -138,7 +144,32 @@ module.exports = {
           path: '../docs',
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/reduxjs/redux/edit/master/website'
+          editUrl: 'https://github.com/reduxjs/redux/edit/master/website',
+          remarkPlugins: [
+            [
+              linkDocblocks,
+              {
+                extractorSettings: {
+                  tsconfig: resolve(__dirname, './tsconfig.json'),
+                  basedir: resolve(__dirname, '../src'),
+                  rootFiles: [
+                    'index.ts',
+                  ],
+                },
+              },
+            ],
+
+            [
+              transpileCodeblocks,
+              {
+                compilerSettings: {
+                  tsconfig: resolve(__dirname, './tsconfig.json'),
+                  externalResolutions: {},
+                  transformVirtualFilepath: (path) => path.replace('/docs/', '/website/')
+                },
+              },
+            ],
+          ],
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
